@@ -3,7 +3,7 @@ import earphoneImg from '../../../assets/images/earphone.png';
 import macbookImg from '../../../assets/images/macbook.png';
 import gamingImg from '../../../assets/images/gaming.png';
 
-export interface Product {
+export interface FeaturedProduct {
   id: string;
   name: string;
   price: number;
@@ -14,7 +14,7 @@ export interface Product {
   isNew?: boolean;
 }
 
-export const FEATURED_PRODUCTS: Product[] = [
+export const FEATURED_PRODUCTS: FeaturedProduct[] = [
   {
     id: 'p1',
     name: 'Smart Watch Wireless',

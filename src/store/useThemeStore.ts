@@ -24,7 +24,6 @@ export const useThemeStore = create<ThemeState>()(
     {
       name: 'theme-storage',
       onRehydrateStorage: () => (state) => {
-        // عند تحميل الصفحة، يتم تطبيق الكلاس بناءً على القيمة المحفوظة
         if (state?.isDarkMode) {
           document.documentElement.classList.add('dark');
         } else {

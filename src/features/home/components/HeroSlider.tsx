@@ -109,7 +109,7 @@ export const HeroSlider: React.FC = () => {
               aria-label={`Go to slide ${idx + 1}`}
               className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
                 currentIndex === idx 
-                  ? 'w-6 sm:w-8 bg-red-600' 
+                  ? 'w-5 bg-red-600' 
                   : 'w-2 sm:w-2.5 bg-gray-400 dark:bg-gray-600 hover:bg-gray-500'
               }`}
             />

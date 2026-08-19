@@ -1,13 +1,13 @@
 import React from 'react';
 import { ShoppingCart, Heart, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
-import type { Product } from '../data/productsData';
+import type { FeaturedProduct } from '../data/productsData';
 
 interface ProductCardProps {
-  product: Product;
+  product: FeaturedProduct;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const FeaturedProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <motion.div
       whileInView={{ opacity: 1, y: 0 }}

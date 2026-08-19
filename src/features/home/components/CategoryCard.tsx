@@ -1,47 +1,60 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import type { CategoryBanner } from '../data/categoryBanners';
+import { useNavigate } from 'react-router-dom';
+import type { CategoryBanner } from '../data/categoryBanners'; 
 
 interface CategoryCardProps {
-  item: CategoryBanner;
+  item: CategoryBanner; 
 }
 
 export const CategoryCard: React.FC<CategoryCardProps> = ({ item }) => {
+  const navigate = useNavigate();
+
+  const { 
+    id, 
+    subtitle, 
+    title, 
+    bgTitle, 
+    buttonText, 
+    bgColor, 
+    textColor, 
+    buttonBg, 
+    buttonTextColor, 
+    imgUrl 
+  } = item;
+
+  const handleBrowse = () => {
+    navigate(`/shop?category=${id}`);
+  };
+
   return (
-    <motion.div
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.2 }}
-      className={`relative overflow-hidden rounded-3xl p-6 sm:p-8 flex flex-col justify-between min-h-[300px] md:min-h-[320px] ${
-        item.bgColor
-      } ${item.textColor} ${
-        item.isWide ? 'col-span-1 sm:col-span-2' : 'col-span-1'
-      }`}
-    >
-      <div className="z-10 flex flex-col items-start space-y-1 max-w-[60%]">
-        <span className="text-sm font-medium opacity-90">{item.subtitle}</span>
-        <span className="text-xl sm:text-2xl font-bold">{item.title}</span>
+    <div className={`relative overflow-hidden rounded-3xl ${bgColor} ${textColor} p-6 sm:p-8 flex flex-col justify-between h-80 group shadow-sm hover:shadow-xl transition-all duration-300`}>
+      
+      <div className="z-10 flex flex-col justify-between h-full items-start">
+        <div>
+          <span className="text-xs sm:text-sm font-semibold opacity-80 uppercase tracking-wider block mb-1">
+            {subtitle}
+          </span>
+          <h3 className="text-xl sm:text-2xl font-black leading-tight mb-1">
+            {title}
+          </h3>
+          
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black opacity-20 uppercase tracking-wider select-none leading-none">
+            {bgTitle}
+          </h2>
+        </div>
 
-        <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight opacity-20 -mt-1 select-none pointer-events-none break-words">
-          {item.bgTitle}
-        </h3>
-
-        {/* Browse Button */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className={`mt-4 font-semibold text-xs sm:text-sm px-6 py-2.5 rounded-full shadow-md transition-colors duration-200 cursor-pointer ${item.buttonBg} ${item.buttonTextColor}`}
+        <button
+          onClick={handleBrowse}
+          className={`${buttonBg} ${buttonTextColor} text-xs sm:text-sm font-extrabold px-7 py-3 rounded-full shadow-md transition-all duration-300 transform group-hover:scale-105 active:scale-95 cursor-pointer mt-4`}
         >
-          {item.buttonText}
-        </motion.button>
+          {buttonText}
+        </button>
       </div>
 
-      <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4 w-1/2 h-full flex items-end justify-end pointer-events-none">
-        <img
-          src={item.imgUrl}
-          alt={item.bgTitle}
-          className="max-h-[180px] sm:max-h-[220px] md:max-h-[250px] w-auto object-contain drop-shadow-xl"
-        />
-      </div>
-    </motion.div>
+      <img 
+        src={imgUrl} 
+        alt={bgTitle} 
+        className="absolute -right-2 -bottom-2 w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 object-contain transform group-hover:scale-105 transition-transform duration-500 z-0 pointer-events-none"
+      />
+    </div>
   );
 };

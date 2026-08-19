@@ -20,7 +20,7 @@ export interface CategoryBanner {
 
 export const CATEGORY_BANNERS: CategoryBanner[] = [
   {
-    id: '1',
+    id: 'Earphone',
     subtitle: 'Enjoy',
     title: 'With',
     bgTitle: 'Earphone',
@@ -32,7 +32,7 @@ export const CATEGORY_BANNERS: CategoryBanner[] = [
     imgUrl: earphone, 
   },
   {
-    id: '2',
+    id: 'Gadget',
     subtitle: 'Enjoy',
     title: 'With',
     bgTitle: 'Gadget',
@@ -44,7 +44,7 @@ export const CATEGORY_BANNERS: CategoryBanner[] = [
     imgUrl: gadget,
   },
   {
-    id: '3',
+    id: 'Laptop',
     subtitle: 'Enjoy',
     title: 'With',
     bgTitle: 'Laptop',
@@ -57,7 +57,7 @@ export const CATEGORY_BANNERS: CategoryBanner[] = [
     isWide: true, 
   },
   {
-    id: '4',
+    id: 'CONSOLE',
     subtitle: 'Enjoy',
     title: 'With',
     bgTitle: 'CONSOLE',
@@ -70,7 +70,7 @@ export const CATEGORY_BANNERS: CategoryBanner[] = [
     isWide: true, 
   },
   {
-    id: '5',
+    id: 'Oculus',
     subtitle: 'Enjoy',
     title: 'With',
     bgTitle: 'Oculus',
@@ -82,7 +82,7 @@ export const CATEGORY_BANNERS: CategoryBanner[] = [
     imgUrl: oculus,
   },
   {
-    id: '6',
+    id: 'Speakers',
     subtitle: 'Enjoy',
     title: 'With',
     bgTitle: 'Speakers',
