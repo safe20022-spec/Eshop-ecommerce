@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { RootLayout } from './components/layout/RootLayout';
 import { HomePage } from './features/home/HomePage';
 import { ShopPage } from './features/shop/ShopPage';
@@ -8,6 +11,19 @@ import { CartDrawer } from './features/cart/components/CartDrawer';
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      
       <CartDrawer />
       
       <Routes>
@@ -22,4 +38,3 @@ export const App: React.FC = () => {
 };
 
 export default App;
-

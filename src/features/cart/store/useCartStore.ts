@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { toast } from 'react-toastify';
 import type { CartStore, CartItem } from '../types';
 
 export const useCartStore = create<CartStore>()(
@@ -12,29 +13,43 @@ export const useCartStore = create<CartStore>()(
 
       addItem: (product, quantity = 1) => {
         set((state) => {
-        const existingItem = state.items.find((item) => item.id === product.id);
+          const existingItem = state.items.find((item) => item.id === product.id);
 
-        if (existingItem) {
-          const updatedItems = state.items.map((item) =>
-            item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-      );
-      return { items: updatedItems, isOpen: true };
-    }
+          if (existingItem) {
+            const updatedItems = state.items.map((item) =>
+              item.id === product.id
+                ? { ...item, quantity: item.quantity + quantity }
+                : item
+            );
+            return { items: updatedItems, isOpen: true };
+          }
 
-    return {
-      items: [...state.items, { ...product, quantity }],
-      isOpen: true,
-    };
-  });
-},
+          return {
+            items: [...state.items, { ...product, quantity }],
+            isOpen: true,
+          };
+        });
 
-      
+        
+        toast.success(`${product.title} Added To The Cart`);
+      },
+
       removeItem: (id) => {
+        const itemToRemove = get().items.find((item) => item.id === id);
+        
         set((state) => ({
           items: state.items.filter((item) => item.id !== id),
         }));
+
+        if (itemToRemove) {
+          toast.info(`${itemToRemove.title} Removed From The Cart`);
+        }
+      },
+
+      
+      clearCart: () => {
+        set({ items: [] });
+        toast.warn(`Cart Is Empty Now`);
       },
 
       updateQuantity: (id, delta) => {
@@ -52,8 +67,6 @@ export const useCartStore = create<CartStore>()(
           return { items: updatedItems };
         });
       },
-
-      clearCart: () => set({ items: [] }),
 
       getTotalPrice: () => {
         return get().items.reduce((sum, item) => sum + item.price * item.quantity, 0);
