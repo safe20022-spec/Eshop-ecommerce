@@ -7,6 +7,8 @@ import { HomePage } from './features/home/HomePage';
 import { ShopPage } from './features/shop/ShopPage';
 import { ProductDetailsPage } from './features/shop/ProductDetailsPage';
 import { CartDrawer } from './features/cart/components/CartDrawer';
+import { CheckoutPage } from './features/checkout/CheckoutPage';
+import { OrderDetailsPage } from './features/checkout/OrderSuccessPage';
 
 export const App: React.FC = () => {
   return (
@@ -31,6 +33,8 @@ export const App: React.FC = () => {
           <Route index element={<HomePage />} />
           <Route path="shop" element={<ShopPage />} />
           <Route path="shop/:id" element={<ProductDetailsPage />} />
+          <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

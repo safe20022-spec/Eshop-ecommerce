@@ -84,7 +84,10 @@ export const CartDrawer: React.FC = () => {
                 </span>
               </div>
 
-              <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 transition-all cursor-pointer">
+              <button 
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 transition-all cursor-pointer"
+                onClick={() => {navigate('/checkout'); toggleCart()}}
+              >
                 Checkout
                 <ArrowRight size={18} />
               </button>
