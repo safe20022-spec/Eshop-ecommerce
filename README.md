@@ -22,6 +22,32 @@ A high-performance, fully responsive e-commerce storefront designed with a moder
 
 ---
 
+## 🛠️ Refactoring & Component Architecture
+
+### Shop Page Modularization
+To maintain clean architecture and ensure High Cohesion & Low Coupling, the **Shop Page** was refactored by separating concerns into dedicated components:
+* `CategoryFilter`: Handles category selection logic and state updates.
+* `ProductGrid`: Pure display component responsible for rendering products based on current filter states.
+
+---
+
+## 🛒 Checkout & Order Flow Architecture
+
+The Checkout system enforces strict data validation and a seamless asynchronous flow:
+
+### Key Highlights:
+1. **Validation Layer (`types.ts`):** 
+   Powered by **Zod** and integrated into **React Hook Form** via `@hookform/resolvers/zod`. Prevents invalid API submissions and provides inline localized field errors.
+   
+2. **Form State Management (`CheckoutPage.tsx`):**
+   Utilizes un-controlled inputs for minimal re-renders during form typing, watching only specific interaction points like payment method switches.
+
+3. **In-Memory Order Persistence (`shopHandlers.ts`):**
+   Integrated with **MSW (Mock Service Worker)** using an in-memory store (`ordersDb`). Orders submitted via `POST /api/orders` are stored transiently, enabling true dynamic fetching via `GET /api/orders/:orderId`.
+
+4. **Dynamic Order Confirmation Page (`OrderDetailsPage.tsx`):**
+   Routes users directly to `/orders/:orderId` after successful purchase. Uses **TanStack Query** to fetch, display, and validate order details independently from the client URL parameter.
+
 ## 🛠️ Tech Stack & Architecture
 
 - **Frontend Framework:** React 18 with TypeScript
