@@ -3,11 +3,29 @@ import { useParams, Link } from 'react-router-dom';
 import { useProductDetails } from './hooks/useProductDetails';
 import { useCartStore } from '../cart/store/useCartStore';
 import { ChevronRight, Star, ShoppingBag, ArrowLeft, AlertCircle } from 'lucide-react';
+import { useAuthStore } from '../auth/store/useAuthStore';
+import { useNavigate, useLocation } from 'react-router-dom';
+// product && addItem(product)
 
 export const ProductDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { data: product, isLoading, isError, error } = useProductDetails(id);
   const addItem = useCartStore((state) => state.addItem);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      
+      navigate('/login', { state: { from: { pathname: location.pathname } } });
+      return;
+    }
+
+    if(product){
+      addItem(product);
+    } 
+  };
 
   if (isLoading) {
     return (
@@ -78,7 +96,7 @@ export const ProductDetailsPage: React.FC = () => {
           </p>
 
           <button 
-            onClick={() => product && addItem(product)}
+            onClick={handleAddToCart}
              className="flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white py-4 px-8 rounded-2xl font-bold shadow-lg shadow-red-600/25 transition-all cursor-pointer"
             >
             <ShoppingBag size={20} />

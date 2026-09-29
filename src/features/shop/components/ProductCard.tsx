@@ -2,8 +2,9 @@ import React from 'react';
 import { ShoppingCart, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Product } from '../data/mockProducts';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useCartStore } from '../../cart/store/useCartStore';
+import { useAuthStore } from '../../auth/store/useAuthStore';
 
 interface ProductCardProps {
   product: Product;
@@ -11,7 +12,19 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const addItem = useCartStore((state) => state.addItem);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      
+      navigate('/login', { state: { from: { pathname: location.pathname } } });
+      return;
+    }
+
+    // إذا كان مسجلاً، يتم إضافة المنتج للسلة
+    addItem(product)
+  };
   return (
     <motion.div 
       layout
@@ -48,7 +61,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       <button 
         className="mt-5 w-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-red-600 dark:hover:bg-red-600 dark:hover:text-white py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm active:scale-98"
-        onClick={() => addItem(product)}
+        onClick={handleAddToCart}
       >
         <ShoppingCart size={16} />
         <span>Add to Cart</span>
