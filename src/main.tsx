@@ -6,7 +6,7 @@ import App from './App';
 import './index.css';
 
 async function enableMocking() {
-  if (import.meta.env.DEV) {
+  if (typeof window !== 'undefined') {
     const { worker } = await import('./mocks/browser');
     return worker.start({ onUnhandledRequest: 'bypass' });
   }
