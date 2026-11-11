@@ -2,9 +2,8 @@ import React from 'react';
 import { ShoppingCart, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Product } from '../data/mockProducts';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../../cart/store/useCartStore';
-import { useAuthStore } from '../../auth/store/useAuthStore';
 
 interface ProductCardProps {
   product: Product;

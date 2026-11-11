@@ -1,7 +1,7 @@
 import { http, HttpResponse, delay } from 'msw';
 import { mockProducts } from '../data/mockProducts';
 
-const ordersDb: Record<string, any> = {};
+// const ordersDb: Record<string, any> = {};
 
 export const shopHandlers = [
   http.get('*/api/products', ({ request }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, RefreshCw } from 'lucide-react';
 import { ProductCard } from './ProductCard';
 import type { Product } from '../data/mockProducts';
 
@@ -21,7 +21,6 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   isError,
   error,
   isRefetching,
-  refetch
 }) => {
   if (isLoading) {
     return (
@@ -39,7 +38,6 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         <AlertCircle size={36} />
         <p className="font-semibold">{error?.message || 'Server Error'}</p>
         <button
-          onClick={() => refetch()}
           disabled={isRefetching}
           className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white rounded-xl font-semibold transition cursor-pointer"
         >
