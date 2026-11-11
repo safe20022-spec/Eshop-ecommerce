@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -35,7 +34,7 @@ export const Register: React.FC = () => {
     });
   };
 
-  // معالجة آمنة لجميع أنواع أخطاء الشبكة والسيرفر
+  
   const globalServerError =
     mutationError?.response?.data?.message ||
     (mutationError instanceof Error ? mutationError.message : null) ||

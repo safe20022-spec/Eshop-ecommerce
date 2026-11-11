@@ -8,11 +8,11 @@ import { ShopPage } from './features/shop/ShopPage';
 import { ProductDetailsPage } from './features/shop/ProductDetailsPage';
 import { CartDrawer } from './features/cart/components/CartDrawer';
 import { CheckoutPage } from './features/checkout/CheckoutPage';
-import { OrderDetailsPage } from './features/checkout/OrderSuccessPage';
+import { OrderDetailsPage } from './features/checkout/OrderDetailsPage';
 import { ProtectedRoute } from './features/auth/components/ProtectedRoute';
 import { Login } from './features/auth/LoginPage';
 import { Register } from './features/auth/signupPage';
-import { OrdersPage } from './features/checkout/api/OrdersPage';
+import { OrdersPage } from './features/checkout/OrdersPage';
 
 export const App: React.FC = () => {
 
@@ -40,7 +40,7 @@ export const App: React.FC = () => {
           <Route path="shop/:id" element={<ProductDetailsPage />} />
           <Route path="checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
           <Route path="/orders" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />
-          <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
+          <Route path="/orders/:orderId" element={<ProtectedRoute><OrderDetailsPage /></ProtectedRoute>} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Register />} />

@@ -1,8 +1,11 @@
+
+import type { OrderConfirmation } from "../../checkout/types";
 export interface MockUser {
   id: string;
   name: string;
   email: string;
   password?: string;
+  orders?: OrderConfirmation[],
 }
 
 const USERS_KEY = 'mock_db_users';
@@ -31,6 +34,8 @@ export const mockDB = {
     }
   },
 
+  
+
   findUserByEmail: (email: string): MockUser | undefined => {
     const users = mockDB.getUsers();
     const normalizedEmail = email.trim().toLowerCase();
@@ -44,7 +49,6 @@ export const mockDB = {
 
   addUser: (newUser: MockUser): void => {
     const users = mockDB.getUsers();
-    // تخزين الإيميل دائماً أحرف صغيرة لتوحيد البيانات
     const userToSave = {
       ...newUser,
       email: newUser.email.trim().toLowerCase(),

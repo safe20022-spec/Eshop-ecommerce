@@ -1,4 +1,3 @@
-// src/mocks/handlers/authHandlers.ts
 import { http, HttpResponse } from 'msw';
 import { mockDB } from '../mocks/db';
 import type { RegisterFormData } from '../schemas/register.schema';
@@ -9,13 +8,13 @@ interface LoginRequestBody {
 }
 
 export const authHandlers = [
-  http.post('*/api/auth/register', async ({ request }) => {
+  
+  http.post('/api/auth/register', async ({ request }) => {
     const body = (await request.json()) as RegisterFormData;
     const { name, email, password } = body;
     const normalizedEmail = email.trim().toLocaleLowerCase();
-    const normalizedName = email.trim().toLocaleLowerCase();
+    const normalizedName = name.trim().toLocaleLowerCase();
 
-    // التحقق من وجود البريد الإلكتروني مسبقاً
     if (mockDB.findUserByEmail(email)) {
       return HttpResponse.json(
         { errors: { email: 'User already exists with this email' } },
@@ -28,6 +27,7 @@ export const authHandlers = [
       name: normalizedName,
       email: normalizedEmail,
       password,
+      orders: [],
     };
 
     mockDB.addUser(newUser);
@@ -46,7 +46,7 @@ export const authHandlers = [
   }),
 
   // 2. (Login)
-  http.post('*/api/auth/login', async ({ request }) => {
+  http.post('/api/auth/login', async ({ request }) => {
     const body = (await request.json()) as LoginRequestBody;
     const { email = '', password = '' } = body;
 

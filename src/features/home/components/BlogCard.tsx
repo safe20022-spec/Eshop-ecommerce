@@ -1,4 +1,3 @@
-// src/features/home/components/BlogCard.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import type { BlogPost } from '../data/blogsData';

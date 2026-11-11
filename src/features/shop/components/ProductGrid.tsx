@@ -12,6 +12,7 @@ interface ProductGridProps {
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
+  isRefetching: boolean;
 }
 
 export const ProductGrid: React.FC<ProductGridProps> = ({
@@ -19,6 +20,8 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   isLoading,
   isError,
   error,
+  isRefetching,
+  refetch
 }) => {
   if (isLoading) {
     return (
@@ -35,11 +38,19 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
       <div className="flex flex-col items-center justify-center py-12 text-red-500 gap-2">
         <AlertCircle size={36} />
         <p className="font-semibold">{error?.message || 'Server Error'}</p>
+        <button
+          onClick={() => refetch()}
+          disabled={isRefetching}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white rounded-xl font-semibold transition cursor-pointer"
+        >
+          <RefreshCw size={18} className={isRefetching ? 'animate-spin' : ''} />
+          Try Again
+        </button>
       </div>
     );
   }
 
-  if (products.length === 0) {
+  if (products.length === 0 || !products) {
     return (
       <div className="text-center py-12 text-gray-500 font-medium">
         Can Not Find Products For This Category

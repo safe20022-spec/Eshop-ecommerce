@@ -35,7 +35,6 @@ export const Login: React.FC = () => {
     });
   };
 
-  // استخراج خطأ السيرفر العام بطريقة آمنة بدون as any
   const generalErrorMessage =
     mutationError?.response?.data?.message ||
     (mutationError instanceof Error ? mutationError.message : null) ||

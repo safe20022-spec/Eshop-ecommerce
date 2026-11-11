@@ -18,14 +18,14 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
         {/* <img src={item.image} alt={item.title} className="max-h-full object-contain" /> */}
       </div>
 
-      {/* تفاصيل المنتج والسعر */}
+      
       <div className="flex-1 min-w-0">
         <h4 className="text-sm font-bold text-gray-900 dark:text-white truncate">{item.title}</h4>
         <p className="text-sm font-semibold text-red-600 dark:text-red-400 mt-1">
           ${(item.price * item.quantity).toFixed(2)}
         </p>
 
-        {/* التحكم في الكميات (+ / -) */}
+        
         <div className="flex items-center gap-2 mt-2">
           <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-lg">
             <button
@@ -49,7 +49,7 @@ export const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
         </div>
       </div>
 
-      {/* زر الحذف */}
+      
       <button
         onClick={() => removeItem(item.id)}
         className="p-2 text-gray-400 hover:text-red-500 transition-colors cursor-pointer"

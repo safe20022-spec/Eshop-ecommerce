@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '../features/auth/store/useAuthStore';
@@ -17,18 +16,18 @@ apiClient.interceptors.response.use(
     const status = error.response?.status;
     const requestUrl = error.config?.url || '';
 
-    // المسارات التي لا تخضع لإجراء تسجيل الخروج عند خطأ 401
+    const isSilentCheckRoute = requestUrl.includes('/auth/me');
+
     const isPublicAuthRoute = 
       requestUrl.includes('/auth/login') || 
       requestUrl.includes('/auth/register');
 
-    // 1. التعامل مع انتهاء الجلسة (401) فقط للمسارات المحمية
-    if (status === 401 && !isPublicAuthRoute) {
+    if (status === 401 && !isPublicAuthRoute && !isSilentCheckRoute) {
       useAuthStore.getState().logout();
       toast.error('Session expired. Please log in again.');
     }
 
-    // 2. Network Error / Offline (فقط إذا لم تكن المعالجة مخصصة محلياً في المكون)
+    // 2. Network Error / Offline
     else if (!error.response) {
       toast.error('Network error. Please check your internet connection.');
     }

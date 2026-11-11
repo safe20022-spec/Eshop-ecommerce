@@ -61,7 +61,7 @@ export const CartDrawer: React.FC = () => {
               <div className="space-y-1">
                 <div className="flex justify-end mb-2">
                   <button
-                    onClick={clearCart}
+                    onClick={() => clearCart(true)}
                     className="text-xs font-semibold text-gray-400 hover:text-red-500 flex items-center gap-1 transition-colors cursor-pointer"
                   >
                     <Trash2 size={12} /> Clear

@@ -1,93 +1,116 @@
-# 🛒 ESHOP — Modern E-Commerce Storefront
+# ESHOP - Smart Electronics Store
 
-[![React](https://img.shields.io/badge/React-18.x-blue?logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
-[![React Router](https://img.shields.io/badge/React_Router-v6%2Fv7-ca4245?logo=reactrouter)](https://reactrouter.com/)
-[![TanStack Query](https://img.shields.io/badge/TanStack_Query-v5-FF4154?logo=reactquery)](https://tanstack.com/query/latest)
-[![Zustand](https://img.shields.io/badge/State_Management-Zustand-purple)](https://github.com/pmndrs/zustand)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
-A high-performance, fully responsive e-commerce storefront designed with a modern feature-based frontend architecture. Built with **React**, **TypeScript**, **Tailwind CSS v4**, **React Router**, **TanStack Query**, and **Zustand**.
+> A modern, high-performance e-commerce platform dedicated to selling the latest electronic products (laptops, headphones, PlayStation consoles, and more) with a smooth and responsive user experience.
 
 ---
 
-## ✨ Key Features
+## 🚀 Key Features
 
-- 🎨 **Feature-Based Architecture:** Scalable folder design separating business domains (`home`, `shop`, `cart`, `layout`) for optimal maintainability.
-- ⚡ **Server-Side Filtering & Search:** Fully asynchronous product filtering (Category, Search, Price Range, Sorting) driven by URL Query Parameters and mock Server API endpoints.
-- ⏱️ **Debounced Search UI:** Optimized custom `useDebounce` hook integrated into the search input to minimize network requests and prevent unnecessary server load.
-- 🛒 **Global Cart Management:** Interactive state-driven shopping cart powered by **Zustand**, featuring a slide-over `CartDrawer`, real-time Navbar item count badge, quantity modification, and item removal.
-- 🚦 **Client-Side Routing & Deep Linking:** Dynamic multi-page client navigation (`/`, `/shop`, `/orders/:orderId`) using **React Router** with synchronized `URLSearchParams` for direct shareable state.
-- 🌙 **Persistent Dark Mode:** Global state-driven theme switching using **Zustand** with `localStorage` persistence and Tailwind CSS v4 custom theme variants.
-- 📱 **Fully Responsive Layout:** Flawless pixel-perfect UI adaptation across mobile, tablet, and desktop viewports.
-- ⚡ **Interactive Motion UI:** Fluid drawer, page, and counter transitions powered by **Framer Motion**.
-
----
-
-## 🛠️ Refactoring & Component Architecture
-
-### Server-Side Filtering & Shop Page Modularization
-To ensure high performance, scalability, and adherence to production-level standards, the **Shop Page** was refactored from local state filtering to a true **Server-Side Filtering pattern**:
-
-* **URL as Single Source of Truth:** All active filter parameters (`category`, `q`, `maxPrice`, `sortBy`) are stored directly in the URL via `useSearchParams`.
-* **Asynchronous Data Fetching:** Powered by **TanStack Query** (`useQuery`), automatically re-fetching filtered items from the API whenever the `queryKey` array changes.
-* **Debounced Search (`useDebounce`):** Keeps local search input updates smooth and instant while delaying URL parameter synchronization by `400ms` until typing stops.
-* **Modular Presentational Components:** 
-  * `SearchInput`: Handles input state and debouncing.
-  * `ProductFilters`: Encapsulates `CategoryFilter`, `PriceFilter`, and `ResetFiltersButton`.
-  * `ProductGrid`: Pure presentation component for rendering skeleton loaders, error states, or fetched product lists.
+* 🏠 **Interactive Home Page:** Features a dynamic **Hero Slider** for promotions and a **Featured Products** section showcasing top electronics.
+* 🛍️ **Product Catalog & Browsing:** Explore various tech categories with fast filtering and search capabilities.
+* 🛒 **Smart Shopping Cart & Drawer:**
+  * Slide-over **Cart Drawer** with Dark Mode support, empty-state handling, and real-time total price/item calculations.
+  * **Optimistic UI Updates & Persistence:** Instant UI feedback powered by **Zustand** (`persist` middleware with `localStorage`), seamlessly syncing with backend APIs in the background.
+  * **Guest-to-User Cart Merging:** Guests can freely add items to their cart; upon logging in, local cart items are automatically merged with their server-side cart.
+* 💳 **Robust Checkout & Order Management Flow:**
+  * **Streamlined Checkout:** Clean checkout process handling shipping details, automatic cart total calculation, and secure order creation via **TanStack Query Mutations**.
+  * **Orders History & Tracking:** Dedicated pages (`/orders` & `/orders/:id`) to track past orders, view item details, timestamps, and order statuses with built-in error handling and refetching states.
+  * **Automatic Cart Cleansing & Redirection:** Upon successful order submission, the cart is cleared and the user is redirected smoothly to their new order summary receipt.
+* 🎨 **Smooth Animations:** Delightful UI transitions and animations powered by **Framer Motion**.
+* 🔔 **Interactive Feedback:** Elegant toast notifications via **React Toastify** for actions and error handling.
+* 📱 **Responsive Design:** Fully optimized using **Tailwind CSS v4** for all screen sizes.
+* 🌐 **Full-Featured API Mocking:** Comprehensive CRUD endpoints for cart, auth, and orders simulation (including cookie-based session handling, cart merging, and mock database persistence) powered by **Mock Service Worker (MSW)**.
 
 ---
 
-## 🛒 Checkout & Order Flow Architecture
+## 🛠️ Tech Stack & Dependencies
 
-The Checkout system enforces strict data validation and a seamless asynchronous flow:
-
-### Key Highlights:
-1. **Validation Layer (`types.ts`):** 
-   Powered by **Zod** and integrated into **React Hook Form** via `@hookform/resolvers/zod`. Prevents invalid API submissions and provides inline localized field errors.
-   
-2. **Form State Management (`CheckoutPage.tsx`):**
-   Utilizes uncontrolled inputs for minimal re-renders during form typing, watching only specific interaction points like payment method switches.
-
-3. **In-Memory Order Persistence (`shopHandlers.ts`):**
-   Integrated with **MSW (Mock Service Worker)** using an in-memory store (`ordersDb`). Orders submitted via `POST /api/orders` are stored transiently, enabling dynamic fetching via `GET /api/orders/:orderId`.
-
-4. **Dynamic Order Confirmation Page (`OrderDetailsPage.tsx`):**
-   Routes users directly to `/orders/:orderId` after successful purchase. Uses **TanStack Query** to fetch, display, and validate order details independently from the URL parameter.
+* **Core:** React 19, TypeScript, Vite
+* **Styling:** Tailwind CSS v4 (`@tailwindcss/vite`)
+* **Routing:** React Router v7
+* **State Management:** Zustand (with `persist` middleware)
+* **Data Fetching & Caching:** TanStack Query (React Query), Axios
+* **Form & Validation:** React Hook Form, Zod (`@hookform/resolvers`)
+* **UI & Icons:** Lucide React, Framer Motion, React Toastify
+* **API Mocking:** Mock Service Worker (MSW)
+* **Linting:** Oxlint
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 📂 Project Structure & Architecture
 
-- **Frontend Framework:** React 18 with TypeScript
-- **Data Fetching & Caching:** TanStack Query (React Query v5)
-- **API Mocking:** Mock Service Worker (MSW)
-- **Form Handling & Validation:** React Hook Form & Zod
-- **Routing:** React Router (`react-router-dom`)
-- **Styling:** Tailwind CSS v4
-- **State Management:** Zustand
-- **Animation & Gestures:** Framer Motion
-- **Iconography:** Lucide React
-- **Build Tool:** Vite
-
----
-
-## 📁 Project Structure
+This project follows a **Feature-Based Architecture**, meaning that code related to specific features (such as products, cart, auth, checkout, and orders) is encapsulated within its own module. This approach enhances code scalability, maintainability, and makes collaboration much easier.
 
 ```text
 src/
-├── features/
-│   ├── home/                  # Home page domain (Hero, Banners, Offers)
-│   ├── shop/                  # Shop domain (ProductGrid, SearchInput, Filters, ProductDetails)
-│   │   ├── components/        # CategoryFilter, PriceFilter, SortSelect, ProductCard
-│   │   └── hooks/             # useProducts, useDebounce
-│   ├── cart/                  # Cart domain (useCartStore, CartDrawer, CartItem)
-│   ├── checkout/              # Checkout form, Zod schema validation, OrderSummary
-│   └── layout/                # Layout components (Navbar, Footer, RootLayout)
-├── mocks/                     # MSW Handlers & mock database handlers
-├── store/
-│   └── useThemeStore.ts       # Zustand store for persistent Dark Mode
-├── types/                     # TypeScript interfaces, Zod schemas, and models
-└── App.tsx                    # Application routes configuration
+├── api/            # Axios instance & API configuration
+├── assets/         # Static files, icons, and images
+├── components/     # Shared global components (Buttons, Cards, Modals...)
+├── features/       # Feature-based modules (Home, Shop, Cart, Auth, Checkout, Orders)
+├── hooks/          # Custom global React hooks
+├── types/          # Global TypeScript interfaces and type definitions
+└── App.tsx         # Main application component & routing
+
+⚙️ Getting Started
+
+To run a local copy of this project on your machine, follow these steps:
+Prerequisites
+
+    Node.js (v18 or higher recommended)
+
+    Git
+
+Installation Steps
+
+    Clone the repository:
+    Bash
+
+git clone [https://github.com/your-username/eshop.git](https://github.com/your-username/eshop.git)
+
+Navigate to the project directory:
+Bash
+
+cd eshop
+
+Install dependencies:
+Bash
+
+npm install
+
+
+Run the development server:
+Bash
+
+    npm run dev
+
+    Open your browser and navigate to http://localhost:5173.
+
+📜 Available Scripts
+
+In the project directory, you can run:
+
+    npm run dev: Runs the app in the development mode using Vite.
+
+    npm run build: Type-checks (tsc -b) and builds the app for production.
+
+    npm run lint: Lints the codebase using Oxlint.
+
+    npm run preview: Locally previews the production build.
+
+🤝 Contributing
+
+Contributions are always welcome! If you have any ideas to improve the store, please follow these steps:
+
+    Fork the Repository.
+
+    Create your Feature Branch (git checkout -b feature/AmazingFeature).
+
+    Commit your Changes (git commit -m 'Add some AmazingFeature').
+
+    Push to the Branch (git push origin feature/AmazingFeature).
+
+    Open a Pull Request.
+
+📄 License
+
+This project is licensed under the MIT License.

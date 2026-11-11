@@ -11,8 +11,11 @@ export interface CartStore {
   addItem: (product: Product, quantity?: number) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, delta: number) => void;
-  clearCart: () => void;
+  clearCart: (showToast: boolean) => void;
   toggleCart: () => void;
+  mergeCartOnLogin: () => void;
+  fetchServerCart: () => void;
+
   
   // Computed getters
   getTotalPrice: () => number;

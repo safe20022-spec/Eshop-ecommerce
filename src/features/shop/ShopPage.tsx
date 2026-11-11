@@ -19,7 +19,7 @@ export const ShopPage: React.FC = () => {
     sortBy: searchParams.get('sortBy') || 'default',
   };
 
-  const { data: products = [], isLoading, isError, error } = useProducts(filters);
+  const { data: products = [], isLoading, isError, refetch, isRefetching, error } = useProducts(filters);
 
   const updateParam = (key: string, value: string | null) => {
     setSearchParams((prev) => {
@@ -77,6 +77,8 @@ export const ShopPage: React.FC = () => {
             isLoading={isLoading}
             isError={isError}
             error={error as Error | null}
+            refetch={refetch}
+            isRefetching={isRefetching} 
           />
         </main>
       </div>

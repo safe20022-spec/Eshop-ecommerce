@@ -5,5 +5,7 @@ export const useProducts = (filters: ProductFilters) => {
   return useQuery({
     queryKey: ['products', filters],
     queryFn: () => fetchProducts(filters),
+    retry: 2,
+    staleTime: 5 * 60 * 1000,
   });
 };

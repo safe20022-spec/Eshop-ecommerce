@@ -12,17 +12,8 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const addItem = useCartStore((state) => state.addItem);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const handleAddToCart = () => {
-    if (!isAuthenticated) {
-      
-      navigate('/login', { state: { from: { pathname: location.pathname } } });
-      return;
-    }
-
-    // إذا كان مسجلاً، يتم إضافة المنتج للسلة
     addItem(product)
   };
   return (

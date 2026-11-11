@@ -1,11 +1,8 @@
-// src/features/checkout/api/orderHandlers.ts
 import { http, HttpResponse } from 'msw';
+import { mockOrdersDB } from '../mocks/db';
 import type { OrderConfirmation } from '../types';
 
-const ordersDb: Record<string, OrderConfirmation> = {};
-
 export const orderHandlers = [
-  // إنشاء طلب جديد
   http.post('*/api/orders', async ({ request }) => {
     const body = (await request.json()) as Omit<OrderConfirmation, 'orderId' | 'createdAt'>;
     const orderId = `ORD-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
@@ -16,28 +13,34 @@ export const orderHandlers = [
       details: body.details,
       totalAmount: body.totalAmount,
       createdAt: new Date().toISOString(),
+      status: 'Processing',
     };
 
-    ordersDb[orderId] = newOrder;
+
+    mockOrdersDB.addOrder(newOrder);
 
     return HttpResponse.json(newOrder, { status: 201 });
   }),
 
-  // جلب كافة الطلبات الخاصّة بالمستخدم
-  http.get('/api/orders', () => {
-    const allOrders = Object.values(ordersDb);
-    return HttpResponse.json(allOrders);
+  http.get('*/api/orders', () => {
+    const orders = mockOrdersDB.getOrders();
+    const sortedOrders = [...orders].sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    return HttpResponse.json(sortedOrders);
   }),
 
-  // جلب طلب واحد برقم الـ orderId
   http.get('*/api/orders/:orderId', ({ params }) => {
     const { orderId } = params;
-    const order = ordersDb[orderId as string];
+    const order = mockOrdersDB.findOrderById(orderId as string);
 
     if (!order) {
-      return new HttpResponse(null, { status: 404 });
+      return new HttpResponse(
+        JSON.stringify({ message: 'Order not found' }),
+        { status: 404, headers: { 'Content-Type': 'application/json' } }
+      );
     }
-
     return HttpResponse.json(order);
   }),
 ];

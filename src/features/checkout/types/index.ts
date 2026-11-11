@@ -12,17 +12,26 @@ export const checkoutSchema = z.object({
 export type ShippingDetails = z.infer<typeof checkoutSchema>;
 
 export interface OrderItem {
-  id: string | number;
+  id: string;
   title: string;
   price: number;
   quantity: number;
   image?: string;
 }
 
+export interface OrderDetails {
+  fullName: string;
+  email: string;
+  address: string;
+  city: string;
+  postalCode: string;
+}
+
 export interface OrderConfirmation {
   orderId: string;
   items: OrderItem[];
-  details: ShippingDetails;
+  details: OrderDetails;
   totalAmount: number;
-  createdAt?: string;
+  createdAt: string;
+  status?: 'Processing' | 'Shipped' | 'Completed' | 'Cancelled';
 }

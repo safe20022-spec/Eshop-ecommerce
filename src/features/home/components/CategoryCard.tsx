@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { CategoryBanner } from '../data/categoryBanners'; 
 
@@ -28,6 +29,7 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ item }) => {
   return (
     <div className={`relative overflow-hidden rounded-3xl ${bgColor} ${textColor} p-6 sm:p-8 flex flex-col justify-between h-80 group shadow-sm hover:shadow-xl transition-all duration-300`}>
       
+      {/* Content Side */}
       <div className="z-10 flex flex-col justify-between h-full items-start">
         <div>
           <span className="text-xs sm:text-sm font-semibold opacity-80 uppercase tracking-wider block mb-1">
@@ -37,22 +39,29 @@ export const CategoryCard: React.FC<CategoryCardProps> = ({ item }) => {
             {title}
           </h3>
           
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black opacity-20 uppercase tracking-wider select-none leading-none">
+          {/* Decorative Background Text (Hidden from Screen Readers) */}
+          <span 
+            aria-hidden="true" 
+            className="text-3xl sm:text-4xl lg:text-5xl font-black opacity-15 uppercase tracking-wider select-none leading-none block pointer-events-none"
+          >
             {bgTitle}
-          </h2>
+          </span>
         </div>
 
         <button
           onClick={handleBrowse}
           className={`${buttonBg} ${buttonTextColor} text-xs sm:text-sm font-extrabold px-7 py-3 rounded-full shadow-md transition-all duration-300 transform group-hover:scale-105 active:scale-95 cursor-pointer mt-4`}
+          aria-label={`Browse products in ${title}`}
         >
           {buttonText}
         </button>
       </div>
 
+      {/* Product/Category Image */}
       <img 
         src={imgUrl} 
-        alt={bgTitle} 
+        alt={title} 
+        loading="lazy"
         className="absolute -right-2 -bottom-2 w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 object-contain transform group-hover:scale-105 transition-transform duration-500 z-0 pointer-events-none"
       />
     </div>
