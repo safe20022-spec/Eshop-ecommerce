@@ -13,6 +13,7 @@ import { ProtectedRoute } from './features/auth/components/ProtectedRoute';
 import { Login } from './features/auth/LoginPage';
 import { Register } from './features/auth/signupPage';
 import { OrdersPage } from './features/checkout/OrdersPage';
+import { NotFound } from './pages/NotFound';
 
 export const App: React.FC = () => {
 
@@ -44,6 +45,7 @@ export const App: React.FC = () => {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Register />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
