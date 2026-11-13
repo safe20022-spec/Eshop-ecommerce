@@ -1,3 +1,7 @@
+import slide_image_1 from '../../../assets/images/headphone.png';
+import slide_image_2 from '../../../assets/images/vr.png';
+import slide_image_3 from '../../../assets/images/macbook.png';
+
 export interface SlideData {
   id: string;
   subtitle: string;
@@ -15,7 +19,7 @@ export const HERO_SLIDES: SlideData[] = [
     title: 'Wireless',
     bgTitle: 'HEADPHONE',
     buttonText: 'Shop By Category',
-    imgUrl: '/src/assets/images/headphone.png',
+    imgUrl: slide_image_1,
     category: 'headphone',
   },
   {
@@ -24,7 +28,7 @@ export const HERO_SLIDES: SlideData[] = [
     title: 'Wireless',
     bgTitle: 'VIRTUAL',
     buttonText: 'Shop By Category',
-    imgUrl: '/src/assets/images/vr.png',
+    imgUrl: slide_image_2,
     category: 'vr',
   },
   {
@@ -33,7 +37,7 @@ export const HERO_SLIDES: SlideData[] = [
     title: 'Branded',
     bgTitle: 'LAPTOPS',
     buttonText: 'Shop By Category',
-    imgUrl: '/src/assets/images/macbook.png',
+    imgUrl: slide_image_3,
     category: 'macbook',
   },
 ];
