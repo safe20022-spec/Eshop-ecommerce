@@ -48,7 +48,7 @@ export const mockProducts: Product[] = [
     title: 'Oculus Quest 2 VR',
     price: 399,
     category: 'Oculus',
-    imgUrl: 'https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?w=500&q=80',
+    imgUrl: 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=500&q=80',
     isFeatured: false, 
   },
   {
