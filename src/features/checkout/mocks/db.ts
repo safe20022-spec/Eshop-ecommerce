@@ -1,33 +1,34 @@
 import type { OrderConfirmation } from '../types';
 
-const STORAGE_KEY = 'eshop_mock_orders';
-const DEFAULT_ORDERS: OrderConfirmation[] = [
+const getOrdersStorageKey = (userId: string) => `eshop_orders_user_${userId}`;
 
-];
+const readOrders = (userId: string): OrderConfirmation[] => {
+  try {
+    const raw = localStorage.getItem(getOrdersStorageKey(userId));
+    if (!raw) return [];
+
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as OrderConfirmation[]) : [];
+  } catch {
+    return [];
+  }
+};
+
+const writeOrders = (userId: string, orders: OrderConfirmation[]): void => {
+  localStorage.setItem(getOrdersStorageKey(userId), JSON.stringify(orders));
+};
 
 export const mockOrdersDB = {
-  getOrders: (): OrderConfirmation[] => {
-    try {
-      const data = localStorage.getItem(STORAGE_KEY);
-      if (!data) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_ORDERS));
-        return DEFAULT_ORDERS;
-      }
-      return JSON.parse(data);
-    } catch {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_ORDERS));
-      return DEFAULT_ORDERS;
-    }
+  getOrders: (userId: string): OrderConfirmation[] => {
+    return readOrders(userId);
   },
 
-  findOrderById: (id: string): OrderConfirmation | undefined => {
-    const orders = mockOrdersDB.getOrders();
-    return orders.find((o) => o.orderId === id);
+  findOrderById: (orderId: string, userId: string): OrderConfirmation | undefined => {
+    return readOrders(userId).find((order) => order.orderId === orderId);
   },
 
-  addOrder: (newOrder: OrderConfirmation): void => {
-    const orders = mockOrdersDB.getOrders();
-    orders.unshift(newOrder);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+  addOrder: (newOrder: OrderConfirmation, userId: string): void => {
+    const currentOrders = readOrders(userId);
+    writeOrders(userId, [newOrder, ...currentOrders]);
   },
 };
